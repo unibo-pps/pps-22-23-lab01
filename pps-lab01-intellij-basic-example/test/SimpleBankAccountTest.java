@@ -1,27 +1,16 @@
 import lab01.example.model.AccountHolder;
-import lab01.example.model.BankAccount;
 import lab01.example.model.SimpleBankAccount;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * The test suite for testing the SimpleBankAccount implementation
- */
-class SimpleBankAccountTest {
-
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+class SimpleBankAccountTest extends AbstractSimpleBankAccountTest {
 
     @BeforeEach
-    void beforeEach(){
-        accountHolder = new AccountHolder("Mario", "Rossi", 1);
-        bankAccount = new SimpleBankAccount(accountHolder, 0);
-    }
-
-    @Test
-    void testInitialBalance() {
-        assertEquals(0, bankAccount.getBalance());
+    void beforeEach() {
+        this.accountHolder = new AccountHolder("Kel", "Vin", 1);
+        this.bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
 
     @Test
