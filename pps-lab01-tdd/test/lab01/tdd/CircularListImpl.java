@@ -28,20 +28,21 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        final Optional<Integer> result = this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(pointer));
         if (!this.isEmpty()) {
+            final Optional<Integer> result = Optional.of(this.list.get(pointer));
             this.pointer = (this.pointer + 1) % this.size();
+            return result;
         }
-        return result;
+        return Optional.empty();
     }
 
     @Override
     public Optional<Integer> previous() {
         if (!this.isEmpty()) {
-            this.pointer = this.pointer == 0 ? this.size() - 1 : this.pointer-1;
+            this.pointer = this.pointer == 0 ? this.size() - 1 : this.pointer - 1;
+            return Optional.of(this.list.get(this.pointer));
         }
-        final Optional<Integer> result = this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(this.pointer));
-        return result;
+        return Optional.empty();
     }
 
     @Override
