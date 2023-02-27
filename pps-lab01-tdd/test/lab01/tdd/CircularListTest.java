@@ -76,6 +76,12 @@ class CircularListTest {
         assertEquals(Optional.of(1), circularList.next());
     }
 
+    private void populateList() {
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+    }
+
     @Test
     void testNextOnEmptyList() {
         assertEquals(Optional.empty(), circularList.next());
@@ -103,9 +109,4 @@ class CircularListTest {
         }
     }
 
-    private void populateList() {
-        circularList.add(1);
-        circularList.add(2);
-        circularList.add(3);
-    }
 }
