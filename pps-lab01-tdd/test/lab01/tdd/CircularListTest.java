@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,25 +83,23 @@ class CircularListTest {
 
     @Test
     void testPreviousOnEmptyList() {
-        assertEquals(Optional.empty(), circularList.next());
+        assertEquals(Optional.empty(), circularList.previous());
     }
 
     @Test
     void testNextOnSingleElement() {
-        final int numberOfAttempts = 100;
-        final int expected = 2;
-        circularList.add(expected);
-        for (var i = 0; i < numberOfAttempts; i++) {
-            assertEquals(Optional.of(expected), circularList.next());
-        }
+        this.testMethodMultipleTimesOnSingleElement(50, circularList::next);
     }
     @Test
     void testPreviousOnSingleElement() {
-        final int numberOfAttempts = 100;
+        this.testMethodMultipleTimesOnSingleElement(100, circularList::previous);
+    }
+
+    private void testMethodMultipleTimesOnSingleElement(final int attempts, Supplier<Optional<Integer>> method) {
         final int expected = 2;
         circularList.add(expected);
-        for (var i = 0; i < numberOfAttempts; i++) {
-            assertEquals(Optional.of(expected), circularList.previous());
+        for (var i = 0; i < attempts; i++) {
+            assertEquals(Optional.of(expected), method.get());
         }
     }
 
