@@ -17,4 +17,17 @@ class CircularListTest {
     void testIsListInitiallyEmpty() {
         assertTrue(circularList.isEmpty());
     }
+
+    @Test
+    void testInitialSizeIsZero() {
+        assertEquals(0, circularList.size());
+    }
+
+    @Test
+    void testCanAddNumbers() {
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        assertEquals(3, circularList.size());
+    }
 }

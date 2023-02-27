@@ -10,12 +10,12 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void add(int element) {
-
+        this.list.add(element);
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.list.size();
     }
 
     @Override
