@@ -1,4 +1,6 @@
-package lab01.tdd;
+package lab01.tdd.step1;
+
+import lab01.tdd.step1.CircularList;
 
 import java.util.ArrayList;
 import java.util.List;
