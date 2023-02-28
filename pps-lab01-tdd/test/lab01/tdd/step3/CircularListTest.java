@@ -44,11 +44,7 @@ class CircularListTest {
     @Test
     void testAlwaysMatchingCondition() {
         this.populateList();
-        final Predicate<Integer> alwaysMatchingPredicate = number -> true;
-        assertEquals(Optional.of(1), this.circularList.filteredNext(alwaysMatchingPredicate));
-        assertEquals(Optional.of(2), this.circularList.filteredNext(alwaysMatchingPredicate));
-        assertEquals(Optional.of(3), this.circularList.filteredNext(alwaysMatchingPredicate));
-        assertEquals(Optional.of(1), this.circularList.filteredNext(alwaysMatchingPredicate));
+        testCondition(List.of(1, 2, 3, 1), number -> true);
     }
 
     @Test
