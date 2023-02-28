@@ -59,6 +59,15 @@ class CircularListTest {
         testCondition(List.of(2, 4, 4, 2, 10, 6, 2, 4), number -> number % 2 == 0);
     }
 
+    @Test
+    void testMultipleMatchingConditionAfterAdd() {
+        final Predicate<Integer> condition = integer -> integer % 2 == 0;
+        this.populateListWith(List.of(1, 2, 3, 4));
+        testCondition(List.of(2, 4, 2, 4), condition);
+        this.populateListWith(List.of(5, 6, 7, 8));
+        testCondition(List.of(6, 8, 2, 4), condition);
+    }
+
     private void populateList() {
         populateListWith(List.of(1, 2, 3));
     }
