@@ -1,10 +1,10 @@
 package lab01.tdd.step1;
 
-import lab01.tdd.step1.CircularList;
-import lab01.tdd.step1.CircularListImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CircularListTest {
 
     private CircularList circularList;
+
     @BeforeEach
     void setUp() {
         circularList = new CircularListImpl();
@@ -37,19 +38,13 @@ class CircularListTest {
     @Test
     void testNext() {
         this.populateList();
-        assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(2), circularList.next());
-        assertEquals(Optional.of(3), circularList.next());
-        assertEquals(Optional.of(1), circularList.next());
+        testMethodYieldings(List.of(1, 2, 3, 1), circularList::next);
     }
 
     @Test
     void testPrevious() {
         this.populateList();
-        assertEquals(Optional.of(3), circularList.previous());
-        assertEquals(Optional.of(2), circularList.previous());
-        assertEquals(Optional.of(1), circularList.previous());
-        assertEquals(Optional.of(3), circularList.previous());
+        testMethodYieldings(List.of(3, 2, 1, 3), circularList::previous);
     }
 
     @Test
@@ -95,19 +90,18 @@ class CircularListTest {
 
     @Test
     void testNextOnSingleElement() {
-        this.testMethodMultipleTimesOnSingleElement(50, circularList::next);
+        this.circularList.add(1);
+        this.testMethodYieldings(Collections.nCopies(50, 1), circularList::next);
     }
     @Test
     void testPreviousOnSingleElement() {
-        this.testMethodMultipleTimesOnSingleElement(100, circularList::previous);
+        this.circularList.add(1);
+        this.testMethodYieldings(Collections.nCopies(50, 1), circularList::previous);
     }
 
-    private void testMethodMultipleTimesOnSingleElement(final int attempts, Supplier<Optional<Integer>> method) {
-        final int expected = 2;
-        circularList.add(expected);
-        for (var i = 0; i < attempts; i++) {
-            assertEquals(Optional.of(expected), method.get());
+    private void testMethodYieldings(List<Integer> yieldings, Supplier<Optional<Integer>> method) {
+        for (int number : yieldings) {
+            assertEquals(Optional.of(number), method.get());
         }
     }
-
 }
