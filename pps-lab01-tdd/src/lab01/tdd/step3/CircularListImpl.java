@@ -37,6 +37,5 @@ public class CircularListImpl implements CircularList {
                  .findFirst();
         nextElementIndex.ifPresent(index -> this.pointer = index + 1);
         return nextElementIndex.map(this.list::get);
-
     }
 }
