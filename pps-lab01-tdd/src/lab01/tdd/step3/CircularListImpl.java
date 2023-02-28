@@ -12,6 +12,7 @@ public class CircularListImpl implements CircularList {
 
     private final List<Integer> list = new ArrayList<>();
     private int pointer = 0;
+
     @Override
     public void add(int element) {
         this.list.add(element);
