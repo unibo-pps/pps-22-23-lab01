@@ -2,6 +2,7 @@ package lab01.tdd.step2;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -31,11 +32,10 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Iterator<Integer> backwardIterator() {
-        return fromStream(() -> isEmpty() ? Stream.empty() :
-            IntStream.iterate(this.size() - 1, index -> index - 1)
-                .limit(this.size())
-                .mapToObj(this.list::get)
-        );
+        return isEmpty() ? Stream.<Integer>empty().iterator() :
+                fromStream(() -> IntStream.iterate(this.size() - 1, index -> index - 1)
+                        .limit(this.size())
+                        .mapToObj(this.list::get));
 
     }
 
