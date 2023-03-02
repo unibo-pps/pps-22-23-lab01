@@ -7,7 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SimpleBankAccountWithAtmTest extends AbstractSimpleBankAccountTest {
 
-    public static final int ATM_FEE = 1;
+    private static final int ATM_FEE = 1;
+    private static final int DEPOSIT_AMOUNT = 100;
+    private static final int WITHDRAWAL_AMOUNT = 50;
+    public static final int WRONG_USER_ID = 2;
 
     @BeforeEach
     void beforeEach() {
@@ -17,29 +20,29 @@ class SimpleBankAccountWithAtmTest extends AbstractSimpleBankAccountTest {
 
     @Test
     void testDeposit() {
-        this.bankAccount.deposit(accountHolder.getId(), 100);
-        assertEquals(100 - ATM_FEE, bankAccount.getBalance());
+        this.bankAccount.deposit(accountHolder.getId(), DEPOSIT_AMOUNT);
+        assertEquals(DEPOSIT_AMOUNT - ATM_FEE, bankAccount.getBalance());
     }
 
     @Test
     void testWrongDeposit() {
-        this.bankAccount.deposit(accountHolder.getId(), 100);
-        this.bankAccount.deposit(2, 50);
-        assertEquals(100 - ATM_FEE, this.bankAccount.getBalance());
+        this.bankAccount.deposit(accountHolder.getId(), DEPOSIT_AMOUNT);
+        this.bankAccount.deposit(WRONG_USER_ID, DEPOSIT_AMOUNT);
+        assertEquals(DEPOSIT_AMOUNT - ATM_FEE, this.bankAccount.getBalance());
     }
 
     @Test
     void testWithdraw() {
-        this.bankAccount.deposit(accountHolder.getId(), 100);
-        this.bankAccount.withdraw(accountHolder.getId(), 50);
-        assertEquals(50 - 2 * ATM_FEE, this.bankAccount.getBalance());
+        this.bankAccount.deposit(accountHolder.getId(), DEPOSIT_AMOUNT);
+        this.bankAccount.withdraw(accountHolder.getId(), WITHDRAWAL_AMOUNT);
+        assertEquals(DEPOSIT_AMOUNT - ATM_FEE - (WITHDRAWAL_AMOUNT + ATM_FEE), this.bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
-        this.bankAccount.deposit(accountHolder.getId(), 100);
-        this.bankAccount.withdraw(2, 50);
-        assertEquals(100 - ATM_FEE, this.bankAccount.getBalance());
+        this.bankAccount.deposit(accountHolder.getId(), DEPOSIT_AMOUNT);
+        this.bankAccount.withdraw(WRONG_USER_ID, WITHDRAWAL_AMOUNT);
+        assertEquals(DEPOSIT_AMOUNT - ATM_FEE, this.bankAccount.getBalance());
     }
 
 }
