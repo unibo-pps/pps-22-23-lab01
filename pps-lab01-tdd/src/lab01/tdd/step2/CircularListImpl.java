@@ -27,22 +27,40 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Iterator<Integer> forwardIterator() {
-        return fromStream(isEmpty() ? Stream::empty : this.list::stream);
+        return new Iterator<>() {
+
+            private int pointer = 0;
+
+            @Override
+            public boolean hasNext() {
+                return !list.isEmpty();
+            }
+
+            @Override
+            public Integer next() {
+                final int result = list.get(pointer);
+                pointer = (pointer + 1) % size();
+                return result;
+            }
+        };
     }
 
     @Override
     public Iterator<Integer> backwardIterator() {
-        return isEmpty() ? Stream.<Integer>empty().iterator() :
-                fromStream(() -> IntStream.iterate(this.size() - 1, index -> index - 1)
-                        .limit(this.size())
-                        .mapToObj(this.list::get));
+        return new Iterator<>() {
 
-    }
+            private int pointer = 0;
 
-    private Iterator<Integer> fromStream(Supplier<Stream<Integer>> streamSupplier) {
-        if (streamSupplier.get().findFirst().isEmpty()) {
-            return Stream.<Integer>empty().iterator();
-        }
-        return Stream.generate(streamSupplier).flatMap(Function.identity()).iterator();
+            @Override
+            public boolean hasNext() {
+                return !list.isEmpty();
+            }
+
+            @Override
+            public Integer next() {
+                pointer = pointer == 0 ? size() - 1 : pointer - 1;
+                return list.get(pointer);
+            }
+        };
     }
 }
